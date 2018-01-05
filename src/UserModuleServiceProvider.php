@@ -21,8 +21,8 @@ class UserModuleServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->bind('UserModule',function(){
-            return new UserModuleLoader();
+        $this->app->bind('UserModuleLoader',function(){
+            return new UserModuleLoader;
         });
     }
 
