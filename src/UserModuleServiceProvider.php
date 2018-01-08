@@ -1,19 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: basu
- * Date: 1/5/18
- * Time: 1:27 PM
- */
-
 namespace basuregami\UserModule;
-use Illuminate\Support\ServiceProvider;
 
+use Illuminate\Support\ServiceProvider;
 
 class UserModuleServiceProvider extends ServiceProvider
 {
-
-
     /**
      * Bootstrap any application services.
      *
@@ -21,9 +12,28 @@ class UserModuleServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->bind('UserModuleLoader',function(){
-            return new UserModuleLoader;
-        });
+        // if (! $this->app->routesAreCached()) {
+        // 	require __DIR__.'/Routes/routes.php';
+        // }
+        $this->loadRoutesFrom(__DIR__.'/Routes/routes.php');
+        //loading views
+        $this->loadMigrationsFrom(__DIR__.'/Database/Migrations');
+        
+        $this->loadViewsFrom(__DIR__.'/Resources/views','usermodule');
+        // $this->loadViewsFrom(base_path('resources/views/vendor/usermodule'),'usermodule');
+
+        //$this->loadMigrationsFrom(base_path('database/migrations'));
+
+        // $this->publishes([
+        //     __DIR__.'/Routes' => base_path('routes/vendor/UserModule')
+        // ]);
+        $this->publishes([
+        	__DIR__.'/Resources/views' => base_path('resources/views/vendor/usermodule')
+        ]);
+
+        $this->publishes([
+        	__DIR__.'/Database/Migrations' => base_path('database/migrations')
+        ]);
     }
 
     /**
