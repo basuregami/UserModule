@@ -30,7 +30,7 @@ class TestUserListner
      */
     public function handle(UserCreated $event)
     {
-       $id = $event->user->getQueueableId();
-       dd($id);
+       // $id = $event->user->getQueueableId();
+       // dd($id);
     }
 }
