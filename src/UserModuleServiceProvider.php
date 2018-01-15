@@ -12,21 +12,12 @@ class UserModuleServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // if (! $this->app->routesAreCached()) {
-        // 	require __DIR__.'/Routes/routes.php';
-        // }
-        $this->loadRoutesFrom(__DIR__.'/Routes/routes.php');
-        //loading views
+
+        //loading migrations
         $this->loadMigrationsFrom(__DIR__.'/Database/Migrations');
         
         $this->loadViewsFrom(__DIR__.'/Resources/views','usermodule');
-        // $this->loadViewsFrom(base_path('resources/views/vendor/usermodule'),'usermodule');
 
-        //$this->loadMigrationsFrom(base_path('database/migrations'));
-
-        // $this->publishes([
-        //     __DIR__.'/Routes' => base_path('routes/vendor/UserModule')
-        // ]);
         $this->publishes([
         	__DIR__.'/Resources/views' => base_path('resources/views/vendor/usermodule')
         ]);
@@ -34,6 +25,8 @@ class UserModuleServiceProvider extends ServiceProvider
         $this->publishes([
         	__DIR__.'/Database/Migrations' => base_path('database/migrations')
         ]);
+
+
     }
 
     /**
@@ -43,6 +36,13 @@ class UserModuleServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        //binding User Repo
+        //bind the user repo
+        $this->app->bind(
+            'basuregami\UserModule\Persistence\Repositories\Contract\iUserInterface',
+            'basuregami\UserModule\Persistence\Repositories\UserRepository'
+        );
+
     }
+
 }
