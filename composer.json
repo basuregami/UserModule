@@ -15,7 +15,7 @@
     },
     "autoload": {
     	"psr-4":{
-    		"basuregami\\UserModule\\": "Modules/basuregami/UserModule/src"
+    		"basuregami\\UserModule\\": "src/"
     	}
     },
     "minimum-stability": "dev",
