@@ -34,56 +34,57 @@ class OperationTableSeeder extends Seeder
        OperationPermission::create(array(
             'role_id' => 2,
             'permission_id' => 1,
-            'operation' => "on,on,on,on"
+            'operation' => "off,off,off,off"
         ));
 
        OperationPermission::create(array(
             'role_id' => 2,
             'permission_id' => 2,
-            'operation' => "on,on,on,on"
+            'operation' => "off,off,off,off"
         ));
 
        OperationPermission::create(array(
             'role_id' => 2,
             'permission_id' => 3,
-            'operation' => "on,on,on,on"
+            'operation' => "off,off,off,off"
+            
         ));
 
        //Author
        OperationPermission::create(array(
             'role_id' => 3,
             'permission_id' => 1,
-            'operation' => "on,on,on,on"
+            'operation' => "off,off,off,off"
         ));
 
        OperationPermission::create(array(
             'role_id' => 3,
             'permission_id' => 2,
-            'operation' => "on,on,on,on"
+            'operation' => "off,off,off,off"
         ));
        OperationPermission::create(array(
             'role_id' => 3,
             'permission_id' => 3,
-            'operation' => "on,on,on,on"
+            'operation' => "off,off,off,off"
         ));
 
        //Moderator
        OperationPermission::create(array(
             'role_id' => 4,
             'permission_id' => 1,
-            'operation' => "on,on,on,on"
+            'operation' => "off,off,off,off"
         ));
 
        OperationPermission::create(array(
             'role_id' => 4,
             'permission_id' => 2,
-            'operation' => "on,on,on,on"
+            'operation' => "off,off,off,off"
         ));
 
        OperationPermission::create(array(
             'role_id' => 4,
             'permission_id' => 3,
-            'operation' => "on,on,on,on"
+            'operation' => "off,off,off,off"
         ));
 
    
@@ -91,19 +92,19 @@ class OperationTableSeeder extends Seeder
        OperationPermission::create(array(
             'role_id' => 5,
             'permission_id' => 1,
-            'operation' => "on,on,on,on"
+            'operation' => "off,off,off,off"
         ));
 
         OperationPermission::create(array(
             'role_id' => 5,
             'permission_id' => 2,
-            'operation' => "on,on,on,on"
+            'operation' => "off,off,off,off"
         ));
 
         OperationPermission::create(array(
             'role_id' => 5,
             'permission_id' => 3,
-            'operation' => "on,on,on,on"
+            'operation' => "off,off,off,off"
         ));
 
        
