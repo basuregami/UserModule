@@ -2,6 +2,8 @@
 
 # Requirement 
     1) You need to install the admin panel backend theme template 
+    2) You need to change in default middleware RedirectIfAuthentication.php redirect 
+       ('/home') to redirect('/console/dashboard')
     
 # Installation 
 	
@@ -95,6 +97,8 @@
 
                 1) create permission -> yourdomain/console/permission/create
                 2) view permission -> yourdomain/console/permissions
+
+
 
 
 
