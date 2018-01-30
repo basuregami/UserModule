@@ -19,13 +19,13 @@
         	]
       
         and run the composer update command: "composer update" 
-        and "php artisan vendor:publis"
+        and "php artisan vendor:publish"
         
      2. Register on the service provider on app.php file inside config folder
 
      	   Add this on provider on config.php provider array
        
-     	    basuregami\UserModule\UserModuleServiceProvider::class,
+     	      basuregami\UserModule\UserModuleServiceProvider::class,
             basuregami\UserModule\Providers\RouteServiceProvider::class,
             basuregami\UserModule\Providers\EventServiceProvider::class,
 
