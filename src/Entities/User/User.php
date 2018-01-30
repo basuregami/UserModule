@@ -10,12 +10,19 @@ class User extends Authenticatable
     use Notifiable;
 
     /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'users';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','username','address','status','user_type'
     ];
 
     /**
@@ -26,4 +33,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function roles()
+    {
+        return $this->belongsToMany('basuregami\UserModule\Entities\Role\Role');
+    }
 }

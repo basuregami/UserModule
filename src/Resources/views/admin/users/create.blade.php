@@ -12,6 +12,13 @@
                             </ul>
                         </div>
                     @endif
+
+                    @if (session('status'))
+                        <div class="alert alert-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
                     <form class="form-horizontal ng-pristine ng-valid" method="POST" action="{{ route('users.store')}}">
                         {{ csrf_field() }}
 
@@ -47,6 +54,40 @@
                                     @endif
                                 </div>
                             </div>
+
+                            <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
+                                <label for="username" class="col-md-4 control-label">UserName</label>
+
+                                <div class="col-md-6">
+                                    <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}" required autofocus>
+
+                                    @if ($errors->has('username'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('username') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('role') ? ' has-error' : '' }}">
+
+                                <label for="role_id" class="col-md-4 control-label">Role</label>
+
+                                <div class="col-md-6">
+                                    <select class="form-control" name="role_id" id="role">
+                                        @inject('Crypt','Illuminate\Support\Facades\Crypt')
+                                        @foreach($roles as $role)
+                                            <option value="{{Crypt::encrypt($role['id'])}}">{{ $role['display_name'] }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->userValidate->has('role'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->userValidate->first('role') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
 
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                                 <label for="password" class="col-md-4 control-label">Password</label>

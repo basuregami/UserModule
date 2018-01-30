@@ -4,37 +4,43 @@ namespace basuregami\UserModule\Helpers;
 class ValidationRules
 {
 
-    function my_sanitize_number($number) {
+    public function mySanitizeNumber($number)
+    {
         return filter_var($number, FILTER_SANITIZE_NUMBER_INT);
     }
 
-    function my_sanitize_decimal($decimal) {
+    public function mySanitizeDecimal($decimal)
+    {
         return filter_var($decimal, FILTER_SANITIZE_NUMBER_FLOAT);
     }
 
-    function my_sanitize_string($string) {
+    public function mySanitizeString($string)
+    {
         $string = strip_tags($string);
         $string = addslashes($string);
         return filter_var($string, FILTER_SANITIZE_STRING);
     }
 
-    function my_sanitize_html($string) {
+    public function mySanitizeHtml($string)
+    {
         $string = strip_tags($string, '<a><strong><em><hr><br><p><u><ul><ol><li><dl><dt><dd><table><thead><tr><th><tbody><td><tfoot>');
         $string = addslashes($string);
         return filter_var($string, FILTER_SANITIZE_STRING);
     }
 
-    function my_sanitize_url($url) {
+    public function mySanitizeUrl($url)
+    {
         return filter_var($url, FILTER_SANITIZE_URL);
     }
 
-    function my_sanitize_slug($string) {
+    public function mySanitizeSlug($string)
+    {
         $string = str_slug($string);
         return filter_var($string, FILTER_SANITIZE_URL);
     }
 
-    function my_sanitize_email($string) {
+    public function mySanitizeEmail($string)
+    {
         return filter_var($string, FILTER_SANITIZE_EMAIL);
     }
-
 }

@@ -35,8 +35,6 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->adminWebRoutes();
-
-        //$this->frontWebRoutes();
     }
 
     /**
@@ -48,25 +46,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function adminWebRoutes()
     {
-        Route::middleware('web')
+        Route::middleware(['web','prevent-back-history'])
              ->namespace($this->namespace)
-             ->group(	__DIR__.'/../Routes/routes.php' );
-            //->group(base_path('app/Http/Routes/Route.php'));
+             ->group(__DIR__.'/../Routes/routes.php');
     }
-
-
-    /**
-     * Define the "web" routes for frontend view of the application.
-     *
-     * These routes all receive session state, CSRF protection, etc.
-     *
-     * @return void
-     */
-//    protected function frontWebRoutes()
-//    {
-//        Route::middleware('web')
-//             ->namespace($this->namespace)
-//             ->group(base_path('app/Http/FrontRoutes/Route.php'));
-//    }
-
 }

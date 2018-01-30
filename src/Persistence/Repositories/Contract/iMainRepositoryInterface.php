@@ -2,7 +2,6 @@
 
 namespace basuregami\UserModule\Persistence\Repositories\Contract;
 
-
 interface iMainRepositoryInterface
 {
     /*
@@ -17,7 +16,7 @@ interface iMainRepositoryInterface
     * Method Declartion
     * @param array of $data, $id
     */
-    public function update(array $data, $parameter, $attribute="id");
+    public function update(array $data, $parameter, $attribute = "id");
 
 
     /*
@@ -25,7 +24,7 @@ interface iMainRepositoryInterface
     * Method Declartion
     * @param array of attributes
     */
-    public function getAll($columns =array('*'));
+    public function getAll($columns = array('*'));
 
     /*
     * Delet function
@@ -47,7 +46,7 @@ interface iMainRepositoryInterface
     * Method Declartion
     * @param array of attributes $data
     */
-    public function findBy($attribute,$data);
+    public function findBy($attribute, $data);
 
 
     /**
@@ -57,10 +56,4 @@ interface iMainRepositoryInterface
      * @return \Illuminate\Pagination\Paginator
      */
     public function paginate($perPage = 15, $columns = ['*']);
-
-
-
-
-
-
 }

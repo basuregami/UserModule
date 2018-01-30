@@ -8,9 +8,8 @@
 
 namespace basuregami\UserModule\Persistence\Repositories\Contract;
 
-
-
 interface iUserInterface extends iMainRepositoryInterface
 {
 
+    public function getListDataTable($request);
 }

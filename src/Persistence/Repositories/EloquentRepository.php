@@ -4,7 +4,6 @@ namespace basuregami\UserModule\Persistence\Repositories;
 
 use basuregami\UserModule\Persistence\Repositories\Contract\iMainRepositoryInterface;
 
-
 /**
  * Abstract class
  * Define alll the generic function
@@ -15,7 +14,8 @@ use basuregami\UserModule\Persistence\Repositories\Contract\iMainRepositoryInter
  * The Abstract Repository provides default implementations of the methods defined in the base repository interface. These simply
  * delegate static function calls to the right eloquent model based on the $modelClassName.
 */
-abstract class EloquentRepository implements iMainRepositoryInterface{
+abstract class EloquentRepository implements iMainRepositoryInterface
+{
 
 
     /**
@@ -28,10 +28,10 @@ abstract class EloquentRepository implements iMainRepositoryInterface{
      * Method Definition
      * @param array of attributes
      */
+
     public function create(array $attributes)
     {
-      return $this->modelClassName::create($attributes);
-
+        return $this->modelClassName::create($attributes);
     }
 
     /*
@@ -39,7 +39,7 @@ abstract class EloquentRepository implements iMainRepositoryInterface{
     * Method Definition
     * @param array of $data, $id
     */
-    public function update(array $data, $parameter, $attribute="id")
+    public function update(array $data, $parameter, $attribute = "id")
     {
 
         return $this->modelClassName::where($attribute, '=', $parameter)->update($data);
@@ -51,7 +51,7 @@ abstract class EloquentRepository implements iMainRepositoryInterface{
     * Method Definition
     * @param array of attributes
     */
-    public function getAll($columns =array('*'))
+    public function getAll($columns = array('*'))
     {
         //return $this->modelClassName::all;
         return call_user_func_array("{$this->modelClassName}::all", array($columns));
@@ -63,7 +63,8 @@ abstract class EloquentRepository implements iMainRepositoryInterface{
      * Method Definition
      * @param $id
      */
-    public function delete($id) {
+    public function delete($id)
+    {
         //return $this->modelClassName->delete($id);
         return call_user_func_array("{$this->modelClassName}::destroy", array($id));
     }
@@ -83,7 +84,7 @@ abstract class EloquentRepository implements iMainRepositoryInterface{
      * Method Definition
      * @param array of attributes $data
      */
-    public function findBy($attribute,$data)
+    public function findBy($attribute, $data)
     {
         // Implment findBy() method
         return $this->modelClassName::where($attribute, '=', $data)->first();
@@ -103,13 +104,8 @@ abstract class EloquentRepository implements iMainRepositoryInterface{
 
 
 
-    public function find($attribute,$data)
+    public function find($attribute, $data)
     {
         return $this->modelClassName::where($attribute, '=', $data)->get();
     }
-
-
-
-
-
 }

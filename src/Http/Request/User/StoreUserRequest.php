@@ -4,9 +4,11 @@ namespace basuregami\UserModule\Http\Request\User;
 
 use basuregami\UserModule\Http\Request\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Crypt;
+
 
 /**
- * Class StoreUserRequest.
+ * Class StoreRoleRequest.
  */
 class StoreUserRequest extends Request
 {
@@ -18,7 +20,6 @@ class StoreUserRequest extends Request
     public function authorize()
     {
         return true;
-
     }
 
     /**
@@ -33,15 +34,20 @@ class StoreUserRequest extends Request
         return [
             'name'     => 'required|max:255',
             'email'    => ['required', 'email', 'max:255', Rule::unique('users')],
+            'username' => ['required', 'max:20', Rule::unique('users')],
             'password' => 'required|min:2|confirmed',
+            'role_id' => 'required'
         ];
     }
 
     public function sanitize()
     {
+      
         $input = $this->all();
         $input['name'] = filter_var($input['name'], FILTER_SANITIZE_STRING);
+        $input['username'] = filter_var($input['username'], FILTER_SANITIZE_STRING);
         $input['email'] = filter_var($input['email'], FILTER_SANITIZE_EMAIL);
+        $input['role_id'] =  Crypt::decrypt($input['role_id']);
         $this->replace($input);
     }
 
@@ -55,6 +61,7 @@ class StoreUserRequest extends Request
         return [
             'name.required' => 'A name is required',
             'email.required' => 'A email is required',
+            'role_id.required' =>  'Role is required',
             'password.required'  => 'A password is required',
             'password.min' => 'Password must have minimum 4 character'
         ];
@@ -62,18 +69,4 @@ class StoreUserRequest extends Request
 
 
 
-    /**
-     * Configure the validator instance.
-     *
-     * @param  \Illuminate\Validation\Validator  $validator
-     * @return void
-     */
-//    public function withValidator($validator)
-//    {
-//        $validator->after(function ($validator) {
-//            if ($validator->fails()) {
-//               dd('error');
-//            }
-//        });
-//    }
 }

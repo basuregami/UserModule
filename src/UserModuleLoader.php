@@ -8,7 +8,6 @@
 
 namespace basuregami\UserModule;
 
-
 class UserModuleLoader
 {
     public function index()

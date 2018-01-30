@@ -7,8 +7,8 @@
  */
 
 namespace basuregami\UserModule\Listeners;
-use basuregami\UserModule\Events\UserCreated;
 
+use basuregami\UserModule\Events\UserCreated;
 
 class TestUserListner
 {
