@@ -4,6 +4,7 @@
     1) You need to install the admin panel backend theme template 
     2) You need to change in default middleware RedirectIfAuthentication.php redirect 
        ('/home') to redirect('/console/dashboard')
+    3) Before trying out the package after all completing all the procedure run the composer-dump autoload command i.e. "composer dump-autoload"
     
 # Installation 
 	
@@ -21,19 +22,20 @@
         	]
       
         and run the composer update command: "composer update" 
-        and "php artisan vendor:publish"
         
      2. Register on the service provider on app.php file inside config folder
 
      	   Add this on provider on config.php provider array
-       
+
      	      basuregami\UserModule\UserModuleServiceProvider::class,
             basuregami\UserModule\Providers\RouteServiceProvider::class,
-            basuregami\UserModule\Providers\EventServiceProvider::class,
-
+            basuregami\UserModule\Providers\EventServiceProvider::class,
 
           Add laravel illuminate str on app.php aliases,
              'Str'       => 'Illuminate\Support\Str',
+
+
+          After Register all the service Provider publish the vendor : "Php artisan vendor:publish"
 
 
      3. Register the middleware on the kernel, kernel.php
@@ -77,6 +79,8 @@
                         $this->call(OperationTableSeeder::class);
                  }
 
+            #Note:- Before running the seeder, you need to run composer dump-autoload 
+
     7. Package Routes
 
             1) login
@@ -97,6 +101,8 @@
 
                 1) create permission -> yourdomain/console/permission/create
                 2) view permission -> yourdomain/console/permissions
+
+
 
 
 
