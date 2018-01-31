@@ -12,12 +12,11 @@ use basuregami\UserModule\Persistence\Repositories\Contract\iRoleInterface;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 
-
 class RoleRepository extends EloquentRepository implements iRoleInterface
 {
     protected $modelClassName = 'basuregami\UserModule\Entities\Role\Role';
 
-   public function getListDataTable($request)
+    public function getListDataTable($request)
     {
         $columns = array(
             0 =>'id',
@@ -39,32 +38,28 @@ class RoleRepository extends EloquentRepository implements iRoleInterface
         $order = $columns[$request->input('order.0.column')];
         $dir = $request->input('order.0.dir');
 
-        if(empty($request->input('search.value')))
-        {
+        if (empty($request->input('search.value'))) {
             $roles = $this->modelClassName::offset($start)
                 ->limit($limit)
-                ->orderBy($order,$dir)
+                ->orderBy($order, $dir)
                 ->get();
-        }
-        else {
+        } else {
             $search = $request->input('search.value');
 
-            $roles =  $this->modelClassName::where('id','LIKE',"%{$search}%")
-                ->orWhere('name', 'LIKE',"%{$search}%")
-                ->offset($start)
-                ->limit($limit)
-                ->orderBy($order,$dir)
-                ->get();
+            $roles =  $this->modelClassName::where('id', 'LIKE', "%{$search}%")
+               ->orWhere('name', 'LIKE', "%{$search}%")
+               ->offset($start)
+               ->limit($limit)
+               ->orderBy($order, $dir)
+               ->get();
 
             $totalFiltered = $roles->count();
         }
 
         $data = array();
-        if(!empty($roles))
-        {
+        if (!empty($roles)) {
             $i = 1;
-            foreach ($roles as $role)
-            {
+            foreach ($roles as $role) {
                 $nestedData['id'] = "<input type='checkbox'  class='deleteRow' value='".$role->id."'  /> ".$i ;
                 $nestedData['name'] = $role->name;
                 $nestedData['display_name'] = $role->display_name;
@@ -78,9 +73,7 @@ class RoleRepository extends EloquentRepository implements iRoleInterface
                 ++$i;
 
                 $data[] = $nestedData;
-
             }
-
         }
 
         $json_data = array(
@@ -91,6 +84,5 @@ class RoleRepository extends EloquentRepository implements iRoleInterface
         );
 
         echo json_encode($json_data);
-
     }
 }

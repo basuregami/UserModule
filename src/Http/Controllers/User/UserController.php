@@ -11,7 +11,6 @@ use basuregami\UserModule\Http\Controllers\User\Traits\ProfileUser;
 use basuregami\UserModule\Http\Controllers\User\Traits\StoreUser;
 use basuregami\UserModule\Http\Controllers\User\Traits\UpdateUser;
 use basuregami\UserModule\Http\Controllers\User\Traits\DeleteUser;
-use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -29,7 +28,6 @@ class UserController extends Controller
 
     public function index()
     {
-
     }
 
     public function ajaxUserList(Request $request)
@@ -42,12 +40,10 @@ class UserController extends Controller
     {
 
          $user = \Auth::user();
-         if ($user->can('view',$user)) {
-                return view('usermodule::admin.users.index');
-         }else{
-             return view('errors.401');
-         }
+        if ($user->can('view', $user)) {
+               return view('usermodule::admin.users.index');
+        } else {
+            return view('errors.401');
+        }
     }
-
-
 }

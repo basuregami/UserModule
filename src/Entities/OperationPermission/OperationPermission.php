@@ -23,13 +23,13 @@ class OperationPermission extends Authenticatable
         'role_id','permission_id','operation'
     ];
 
-    public function Role()
+    public function role()
     {
-        return $this->belongsTo('basuregami\UserModule\Entities\Role\Role','role_id');
+        return $this->belongsTo('basuregami\UserModule\Entities\Role\Role', 'role_id');
     }
 
-    public function Permission()
+    public function permission()
     {
-        return $this->belongsTo('basuregami\UserModule\Entities\Permission\Permission','permission_id');
+        return $this->belongsTo('basuregami\UserModule\Entities\Permission\Permission', 'permission_id');
     }
 }

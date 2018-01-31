@@ -1,15 +1,14 @@
 <?php
 
 namespace basuregami\UserModule\Http\Controllers\Role\Traits;
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Crypt;
 use basuregami\UserModule\Http\Request\Role\UpdateRoleRequest;
 use basuregami\UserModule\Entities\Role\Role;
-use Illuminate\Support\Str;
 
 trait UpdateRole
 {
-	//show the form to edit specific role
+    //show the form to edit specific role
     public function edit($id)
     {
         $user = \Auth::user();
@@ -20,15 +19,13 @@ trait UpdateRole
                 $role = $this->role->findById(Crypt::decrypt($id));
                 $operationPermissions =  $this->rolePermissionUpdate(Crypt::decrypt($id));
 
-                return view("usermodule::admin.roles.edit",compact( ["role","operationPermissions"] ));
-                
+                return view("usermodule::admin.roles.edit", compact(["role","operationPermissions"]));
             } catch (Exception $e) {
                 return $e;
             }
-        }else{
+        } else {
             return view('errors.401');
         }
-        
     }
 
     //action route to edit/update specific role
@@ -36,7 +33,7 @@ trait UpdateRole
     {
         $user = \Auth::user();
         $role = new Role();
-        if ($user->can('edit',$role)) {
+        if ($user->can('edit', $role)) {
             try {
                 $id = Crypt::decrypt($request->id);
                 $updateRoleData['name'] = $request->name;
@@ -55,9 +52,7 @@ trait UpdateRole
                 * rolePermissionUpdateChange is on the PermissionRole trait 
                 */
                 $this->rolePermissionUpdateChange($permissions, $id);
-                return redirect()->back()->with('status',"Role Updated Successfully");
-                
-
+                return redirect()->back()->with('status', "Role Updated Successfully");
             } catch (\Exception $e) {
                 return $e;
                 $environment  = config('app.env');
@@ -67,12 +62,8 @@ trait UpdateRole
                     return redirect()->back()->withErrors(['errorMessage' => $e->getMessage()]);
                 }
             }
-        }else{
+        } else {
             return view('errors.401');
         }
-
-
     }
-
-
 }

@@ -5,29 +5,26 @@ namespace basuregami\UserModule\Http\Controllers\User\Traits;
 use basuregami\UserModule\Events\UserCreated;
 use basuregami\UserModule\Http\Request\User\StoreUserRequest;
 
-
 trait StoreUser
 {
-     public function create()
+    public function create()
     {
 
-         $user = \Auth::user();
-         if ($user->can('create',$user)) {
-             $roles = $this->role->getAll();
-             return view('usermodule::admin.users.create', compact('roles'));
-         }else{
-             return view('errors.401');
-         }
-
+        $user = \Auth::user();
+        if ($user->can('create', $user)) {
+            $roles = $this->role->getAll();
+            return view('usermodule::admin.users.create', compact('roles'));
+        } else {
+            return view('errors.401');
+        }
     }
 
     
     public function store(StoreUserRequest $request)
     {
         $user = \Auth::user();
-        if ($user->can('create',$user)) {
+        if ($user->can('create', $user)) {
             try {
-
                 $userStore['name'] = $request->name;
                 $userStore['email'] = $request->email;
                 $userStore['username'] = $request->username;
@@ -43,8 +40,7 @@ trait StoreUser
                 //Create new userCreate Event
                 event(new UserCreated($userCreated));
 
-                return redirect('console/users')->with('status',"User Successfully Created");
-
+                return redirect('console/users')->with('status', "User Successfully Created");
             } catch (\Exception $e) {
                 $environment  = config('app.env');
                 if ($environment == 'local') {
@@ -53,10 +49,8 @@ trait StoreUser
                     return redirect()->back()->withErrors(['errorMessage' => $e->getMessage()]);
                 }
             }
-        }else{
+        } else {
             return view('errors.401');
         }
-
     }
-
 }

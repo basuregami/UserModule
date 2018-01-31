@@ -41,7 +41,7 @@ Route::group(['prefix'=>'console','middleware'=>['auth','prevent-back-history']]
                 'uses' => 'User\UserController@multipleDelete',
             ]);
 
-            Route::get('/update/password/{id}', [
+            Route::get('/user/update/password', [
                 'uses' => 'User\UserController@updatepassword',
                 'as' => 'users.update.password'
             ]);

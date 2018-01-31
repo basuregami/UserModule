@@ -12,12 +12,11 @@ use basuregami\UserModule\Persistence\Repositories\Contract\iPermissionInterface
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 
-
 class PermissionRepository extends EloquentRepository implements iPermissionInterface
 {
     protected $modelClassName = 'basuregami\UserModule\Entities\Permission\Permission';
 
-   public function getListDataTable($request)
+    public function getListDataTable($request)
     {
         $columns = array(
             0 =>'id',
@@ -39,31 +38,27 @@ class PermissionRepository extends EloquentRepository implements iPermissionInte
         $order = $columns[$request->input('order.0.column')];
         $dir = $request->input('order.0.dir');
 
-        if(empty($request->input('search.value')))
-        {
+        if (empty($request->input('search.value'))) {
             $permissions = $this->modelClassName::offset($start)
                 ->limit($limit)
-                ->orderBy($order,$dir)
+                ->orderBy($order, $dir)
                 ->get();
-        }
-        else {
+        } else {
             $search = $request->input('search.value');
 
-            $permissions =  $this->modelClassName::where('id','LIKE',"%{$search}%")
-                ->orWhere('name', 'LIKE',"%{$search}%")
-                ->offset($start)
-                ->limit($limit)
-                ->orderBy($order,$dir)
-                ->get();
+            $permissions =  $this->modelClassName::where('id', 'LIKE', "%{$search}%")
+               ->orWhere('name', 'LIKE', "%{$search}%")
+               ->offset($start)
+               ->limit($limit)
+               ->orderBy($order, $dir)
+               ->get();
             $totalFiltered = $permissions->count();
         }
 
         $data = array();
-        if(!empty($permissions))
-        {
+        if (!empty($permissions)) {
             $i = 1;
-            foreach ($permissions as $permission)
-            {
+            foreach ($permissions as $permission) {
                 $nestedData['id'] = "<input type='checkbox'  class='deleteRow' value='".$permission->id."'  /> ".$i ;
                 $nestedData['name'] = $permission->name;
                 $nestedData['display_name'] = $permission->display_name;
@@ -77,9 +72,7 @@ class PermissionRepository extends EloquentRepository implements iPermissionInte
                 ++$i;
 
                 $data[] = $nestedData;
-
             }
-
         }
 
         $json_data = array(
@@ -90,6 +83,5 @@ class PermissionRepository extends EloquentRepository implements iPermissionInte
         );
 
         echo json_encode($json_data);
-
     }
 }

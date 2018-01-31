@@ -6,7 +6,6 @@ use basuregami\UserModule\Http\Request\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Crypt;
 
-
 /**
  * Class StoreRoleRequest.
  */
@@ -66,7 +65,4 @@ class StoreUserRequest extends Request
             'password.min' => 'Password must have minimum 4 character'
         ];
     }
-
-
-
 }

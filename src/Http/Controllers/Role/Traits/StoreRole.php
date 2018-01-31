@@ -1,11 +1,9 @@
 <?php
 
 namespace basuregami\UserModule\Http\Controllers\Role\Traits;
-use Illuminate\Http\Request;
+
 use basuregami\UserModule\Entities\Role\Role;
 use basuregami\UserModule\Http\Request\Role\StoreRoleRequest;
-use Illuminate\Support\Str;
-
 
 trait StoreRole
 {
@@ -15,22 +13,21 @@ trait StoreRole
     {
         $user = \Auth::user();
         $role = new Role();
-        if ($user->can('create',$role)) {
+        if ($user->can('create', $role)) {
             $permissions = $this->permission->getAll();
-            return view('usermodule::admin.roles.create', compact("permissions") );
-        }else{
+            return view('usermodule::admin.roles.create', compact("permissions"));
+        } else {
             return view('errors.401');
         }
+    }
 
-}
-
-	
+    
     //action route to create/add/store new role
     public function store(StoreRoleRequest $request)
     {
         $user = \Auth::user();
         $role = new Role();
-        if ($user->can('create',$role)) {
+        if ($user->can('create', $role)) {
             try {
                 $storeRole['display_name'] = $request->display_name;
                 $storeRole['description'] = $request->description;
@@ -45,8 +42,7 @@ trait StoreRole
                 $role_id = $role->id;
                 
                 $this->rolePermission($permission, $role_id);
-                return redirect('console/roles')->with('status',"Role Successfully Created");
-                
+                return redirect('console/roles')->with('status', "Role Successfully Created");
             } catch (\Exception $e) {
                 return $e;
                 $environment  = config('app.env');
@@ -56,9 +52,8 @@ trait StoreRole
                     return redirect()->back()->withErrors(['errorMessage' => $e->getMessage()]);
                 }
             }
-        }else{
+        } else {
             return view('errors.401');
         }
     }
-
 }

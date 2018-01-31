@@ -21,12 +21,6 @@
 
                     <form class="form-horizontal ng-pristine ng-valid" method="POST" action="{{ route('users.store')}}">
                         {{ csrf_field() }}
-
-                        {{--<div class="form-group"><label class="col-sm-2 control-label">Normal</label>--}}
-                            {{--<div class="col-sm-10"><input class="form-control" type="text"></div>--}}
-                        {{--</div>--}}
-
-
                             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                 <label for="name" class="col-md-4 control-label">Name</label>
 

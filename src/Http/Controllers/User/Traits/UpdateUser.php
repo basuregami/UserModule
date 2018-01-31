@@ -5,15 +5,12 @@ namespace basuregami\UserModule\Http\Controllers\User\Traits;
 use Illuminate\Support\Facades\Crypt;
 use basuregami\UserModule\Http\Request\User\UpdateUserRequest;
 
-
-
 trait UpdateUser
 {
     public function edit($id)
     {
         $user = \Auth::user();
-        if ($user->can('update',$user)) {
-
+        if ($user->can('update', $user)) {
             $user = null;
             try {
                 $roles = $this->role->getAll();
@@ -22,9 +19,7 @@ trait UpdateUser
             } catch (Exception $e) {
                 return $e;
             }
-
-           
-        }else{
+        } else {
             return view('errors.401');
         }
     }
@@ -32,9 +27,8 @@ trait UpdateUser
     public function update(UpdateUserRequest $request)
     {
         $user = \Auth::user();
-        if ($user->can('update',$user)) {
+        if ($user->can('update', $user)) {
             try {
-    
                     $id = $request->id;
 
                     $updateUserData['name'] = $request->name;
@@ -49,13 +43,12 @@ trait UpdateUser
                         $prevRoleId = $role->id;
                     }
                     //update role
-                    $userPivot->roles()->updateExistingPivot($prevRoleId,$updateAttributes);
+                    $userPivot->roles()->updateExistingPivot($prevRoleId, $updateAttributes);
 
                     // update user
                     $user = $this->user->update($updateUserData, $id);
 
-                    return redirect('console/users')->with('status',"User Detail Updated Successfully");
-                
+                    return redirect('console/users')->with('status', "User Detail Updated Successfully");
             } catch (\Exception $e) {
                 $environment  = config('app.env');
                 if ($environment == 'local') {
@@ -64,10 +57,8 @@ trait UpdateUser
                     return redirect()->back()->withErrors(['errorMessage' => $e->getMessage()]);
                 }
             }
-        }else{
+        } else {
             return view('errors.401');
         }
-
     }
-
 }

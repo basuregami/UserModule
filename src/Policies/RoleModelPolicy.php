@@ -11,14 +11,15 @@ namespace basuregami\UserModule\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 use basuregami\UserModule\Entities\OperationPermission\OperationPermission;
-Use basuregami\UserModule\Entities\User\User;
-Use basuregami\UserModule\Entities\Role\Role;
+use basuregami\UserModule\Entities\User\User;
+use basuregami\UserModule\Entities\Role\Role;
 
 class RoleModelPolicy
 {
     use HandlesAuthorization;
 
-    public  function operation($user){
+    public function operation($user)
+    {
         $role = $user->roles->first()->id;
         $permission = 2;
 
@@ -31,8 +32,6 @@ class RoleModelPolicy
         $operationPermission = explode(',', $operationPermission);
         //dd($operationPermission);
         return $operationPermission;
-
-
     }
 
     /**
@@ -45,10 +44,9 @@ class RoleModelPolicy
     {
         $operationPermission = $this->operation($user);
 
-        if ($operationPermission[0] == 'on'){
-          return true;
+        if ($operationPermission[0] == 'on') {
+            return true;
         }
-
     }
 
 
@@ -63,7 +61,7 @@ class RoleModelPolicy
     {
         $operationPermission = $this->operation($user);
 
-        if ($operationPermission[1] == 'on'){
+        if ($operationPermission[1] == 'on') {
             return true;
         }
     }
@@ -80,7 +78,7 @@ class RoleModelPolicy
     {
         $operationPermission = $this->operation($user);
 
-        if ($operationPermission[2] == 'on'){
+        if ($operationPermission[2] == 'on') {
             return true;
         }
     }
@@ -96,7 +94,7 @@ class RoleModelPolicy
     {
         $operationPermission = $this->operation($user);
 
-        if ($operationPermission[3] == 'on'){
+        if ($operationPermission[3] == 'on') {
             return true;
         }
     }

@@ -23,8 +23,8 @@ class Permission extends Authenticatable
         'name','display_name','description'
     ];
 
-    public function OperationPermission()
+    public function operationPermission()
     {
-        return $this->hasMany('basuregami\UserModule\Entities\OperationPermission\OperationPermission','permission_id');
+        return $this->hasMany('basuregami\UserModule\Entities\OperationPermission\OperationPermission', 'permission_id');
     }
 }

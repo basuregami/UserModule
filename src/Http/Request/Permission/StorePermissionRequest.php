@@ -57,7 +57,4 @@ class StorePermissionRequest extends Request
            
         ];
     }
-
-
-
 }

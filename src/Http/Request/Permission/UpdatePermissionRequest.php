@@ -57,7 +57,4 @@ class UpdatePermissionRequest extends Request
            
         ];
     }
-
-
-
 }

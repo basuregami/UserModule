@@ -40,7 +40,6 @@ class UpdatePasswordRequest extends Request
 
         $input = $this->all();
         return $input;
-
     }
 
     /**
