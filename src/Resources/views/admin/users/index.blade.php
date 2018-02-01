@@ -1,4 +1,9 @@
 @extends('backend.layouts.master')
+@section('after-styles')
+    {{--Datatable styling--}}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.2.4/css/select.dataTables.min.css"/>
+@endsection
 @section('content')
     <div class="table-responsive">
         @if (session('status'))
@@ -14,6 +19,7 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Role</th>
+                    <th>Status</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -23,6 +29,7 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Role</th>
+                <th>Status</th>
                 <th>Action</th>
             </tr>
             </tfoot>
@@ -34,14 +41,15 @@
 
 @endsection
 @section('after-scripts')
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.2.4/css/select.dataTables.min.css"/>
+
+    {{--Datatable js--}}
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs/jszip-2.5.0/dt-1.10.16/af-2.2.2/b-1.4.2/b-colvis-1.4.2/b-flash-1.4.2/b-html5-1.4.2/b-print-1.4.2/cr-1.4.1/r-2.2.0/rr-1.2.3/sc-1.4.3/sl-1.2.3/datatables.min.js"></script>
-
     <!-- sweet alert -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
     <script type="text/javascript">
 
         $(document).ready(function() {
@@ -66,11 +74,12 @@
                     {"data": "name"},
                     {"data": "email"},
                     {"data": "role"},
+                    {"data": "status"},
                     {"data": "action"}
                 ],
 
                 "columnDefs": [{
-                    "targets": [4],
+                    "targets": [5],
                     "orderable": false
                 },],
                 "ajax": {

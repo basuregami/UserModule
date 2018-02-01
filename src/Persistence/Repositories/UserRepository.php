@@ -23,7 +23,8 @@ class UserRepository extends EloquentRepository implements iUserInterface
             1 =>'name',
             2 =>'email',
             3 => 'role',
-            4 =>'action',
+            4 => 'status',
+            5 =>'action',
         );
 
         $totalData = DB::table('users')
@@ -40,13 +41,14 @@ class UserRepository extends EloquentRepository implements iUserInterface
 
         if (empty($request->input('search.value'))) {
             $users = $this->modelClassName::offset($start)
+                ->where('is_superadmin',0)
                 ->limit($limit)
                 ->orderBy($order, $dir)
                 ->get();
         } else {
             $search = $request->input('search.value');
-
-            $users =  $this->modelClassName::where('id', 'LIKE', "%{$search}%")
+            $users =  $this->modelClassName::where('is_superadmin',0)
+                ->orwhere('id', 'LIKE', "%{$search}%")
                 ->orWhere('name', 'LIKE', "%{$search}%")
                 ->offset($start)
                 ->limit($limit)
@@ -65,6 +67,12 @@ class UserRepository extends EloquentRepository implements iUserInterface
                 $nestedData['email'] = $user->email;
                 foreach ($user->roles as $role) {
                     $nestedData['role'] = '<label class="label label-success">'.$role->display_name.'</label>';
+                }
+                $nestedData['status'] = $user->status;
+                if ($user->status == 1){
+                    $nestedData['status'] = '<label class="label label-primary"> Active </label>';
+                }else{
+                    $nestedData['status'] = '<label class="label label-warning"> InActive </label>';
                 }
                 $nestedData['action'] = '
                         <a href="/console/user/edit/'.Crypt::encrypt($user->id).'" title="Edit" class="userUpdate" btn-value="'.$user->id.'"><i class="fa fa-pencil-square-o fa-fw edit-icons edit"></i> </a>

@@ -6,7 +6,9 @@ use basuregami\UserModule\Http\Controllers\Controller;
 use basuregami\UserModule\Http\Controllers\Permission\Traits\StorePermission;
 use basuregami\UserModule\Http\Controllers\Permission\Traits\UpdatePermission;
 use basuregami\UserModule\Http\Controllers\Permission\Traits\DeletePermission;
+use basuregami\UserModule\Http\Controllers\Permission\Traits\PermissionRole;
 use basuregami\UserModule\Persistence\Repositories\Contract\iPermissionInterface as PermissionRepository;
+use basuregami\UserModule\Persistence\Repositories\Contract\iRoleInterface as RoleRepository;
 use basuregami\UserModule\Entities\Permission\Permission;
 use Illuminate\Http\Request;
 
@@ -14,11 +16,13 @@ class PermissionController extends Controller
 {
     use StorePermission,
         UpdatePermission,
-        DeletePermission;
+        DeletePermission,
+        PermissionRole;
 
-    public function __construct(PermissionRepository $permission)
+    public function __construct(PermissionRepository $permission,RoleRepository $role)
     {
         $this->permission = $permission;
+        $this->role = $role;
     }
 
     //show the listing of available roles

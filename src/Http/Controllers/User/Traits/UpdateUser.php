@@ -33,6 +33,7 @@ trait UpdateUser
 
                     $updateUserData['name'] = $request->name;
                     $updateUserData['address'] = $request->address;
+                    $updateUserData['status'] = $request->status;
                     $roleId = $request->role_id;
                     $updateAttributes = [
                         'role_id' => $roleId,

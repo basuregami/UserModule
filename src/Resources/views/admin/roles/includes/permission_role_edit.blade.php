@@ -10,8 +10,7 @@
 			];
 		@endphp
 		
-        @foreach ($operationPermissions as $operationPermission)	
-	
+        @foreach ($operationPermissions as $operationPermission)
         	<div class="row">
 
         		<div class="col-md-4">

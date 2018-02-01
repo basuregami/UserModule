@@ -31,6 +31,7 @@ class UpdateUserRequest extends Request
        // $input = $this->all());
         return [
             'name'     => 'required|max:255',
+            'status' => 'required',
             'address' => 'required'
             //'email' => 'unique:users,email,'.$this->input['id']
         ];
@@ -53,8 +54,8 @@ class UpdateUserRequest extends Request
     public function messages()
     {
         return [
-            'name.required' => 'User name is required',
-            'address.required' => 'Address is required',
+            'name.required' => 'Name field is required',
+            'address.required' => 'Address field is required',
         ];
     }
 }

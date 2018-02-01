@@ -28,7 +28,7 @@
                                 <label for="name" class="col-md-4 control-label">Name</label>
 
                                 <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control" name="name" value="{{$user->name }}" required autofocus>
+                                    <input id="name" type="text" class="form-control" name="name" value="{{$user->name }}"  autofocus>
 
                                     @if ($errors->has('name'))
                                         <span class="help-block">
@@ -43,7 +43,7 @@
                                 <label for="name" class="col-md-4 control-label">Address</label>
 
                                 <div class="col-md-6">
-                                    <input id="address" type="text" class="form-control" name="address" value="{{$user->address }}" required autofocus>
+                                    <input id="address" type="text" class="form-control" name="address" value="{{$user->address }}"  autofocus>
 
                                     @if ($errors->has('name'))
                                         <span class="help-block">
@@ -52,6 +52,27 @@
                                     @endif
                                 </div>
                             </div>
+
+                        <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
+                            <label for="status" class="col-md-4 control-label">status</label>
+
+                            <div class="col-md-6">
+                                <select class="form-control" name="status" id="status">
+                                    @if($user->status == 0)
+                                        <option value="0" selected>Inactive</option>
+                                        <option value="1">Active</option>
+                                    @else
+                                        <option value="1" selected>Active</option>
+                                        <option value="0">Inactive</option>
+                                    @endif
+                                </select>
+                                @if ($errors->has('status'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('status') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
 
                             <div class="form-group{{ $errors->has('role') ? ' has-error' : '' }}">
 

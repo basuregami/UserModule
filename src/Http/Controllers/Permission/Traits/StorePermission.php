@@ -34,7 +34,15 @@ trait StorePermission
                 $storePermission['name'] = $slug;
 
                 //create the new permission
-                $this->permission->create($storePermission);
+                $storePermissionObject = $this->permission->create($storePermission);
+                /*
+                 * After creating the new permisson, new permission should be assigned to all the role
+                 *  so we will send the new permission created id and all the role id and create the operation permission
+                 * by default we will assign off value to all the operation
+                 *  it will hadle by the PermissionRole Trait
+                 * */
+                $this->PermissionRole($storePermissionObject->id);
+
                 return redirect('console/permissions')->with('status', 'Permission Created');
             } catch (\Exception $e) {
                 return $e;
