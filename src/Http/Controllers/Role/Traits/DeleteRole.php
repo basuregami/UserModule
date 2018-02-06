@@ -23,7 +23,9 @@ trait DeleteRole
                 return $e;
             }
         } else {
-            return view('errors.401');
+
+            return response()->json(['error' => 'Error msg'], 404);
+            //return view('errors.401');
         }
     }
 
@@ -38,12 +40,15 @@ trait DeleteRole
                 $data_ids = $_REQUEST['data_ids'];
                 $data_id_array = explode(",", $data_ids);
                 $this->role->delete($data_id_array);
-                 return "successfully deleted";
+                $response['status']  = 'success';
+                $response['message'] = 'Role Deleted Successfully ...';
             } catch (Exception $e) {
                 return $e;
             }
         } else {
-            return view('errors.401');
+            $response['status']  = 'Error';
+            $response['message'] = 'You Are Not Authorized';
         }
+        echo json_encode($response);
     }
 }

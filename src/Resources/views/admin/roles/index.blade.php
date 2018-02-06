@@ -1,7 +1,9 @@
 @extends('backend.layouts.master')
 @section('content')
     <div class="table-responsive">
+        
         <table class="table table-striped table-bordered table-condensed display" id="roleTable" width="100%" cellspacing="0">
+            @include('usermodule::includes.success')
             <input id="multipleDelete" type="checkbox"><button id="multipleDeleteButton">Delete</button>
             <thead class="">
             <tr>
@@ -40,7 +42,6 @@
     <script type="text/javascript">
 
         $(document).ready(function() {
-            console.log("jcjghgfhgfhgfhgfhgfhgf");
             var table = $('#roleTable').DataTable({
                 "paging": true, // Allow data to be paged
                 "lengthChange": false,
@@ -78,10 +79,7 @@
 
             });
 
-
-
             $('#roleTable').on('click', '.roleRemove',function (e) {
-                console.log('hello');
                 e.preventDefault();
                 var role_name= $(this).attr('role_name');
                 var roleId = $(this).attr('roleId');
@@ -95,36 +93,35 @@
                     dangerMode: true,
                 })
                     .then((willDelete) => {
-                    if (willDelete) {
-                        $.ajax({
-                            type: "POST",
-                            url: "{{url('console/role/delete')}}",
-                            data: data,
-                            success: function(result){
-                                table.draw();
-                            },
-                           // async: false
-                        });
-                        swal("Role deleted!", {
-                            icon: "success",
-                        });
-                        //window.location.href = href;
-                    } else {
-                        swal("Action Canceled!");
-            }
-            });
+                        if (willDelete) {
+                            $.ajax({
+                                type: "POST",
+                                url: "{{url('console/role/delete')}}",
+                                data: data,
+                                success: function(result){
+                                    table.draw();
+                                },
+                                async: false
+                            });
+                            //window.location.href = href;
+                            swal("Role deleted!", {
+                                icon: "success",
+                            });
+                        } else {
+                            swal("Action Canceled!");
+                        }
+                    });
             });
 
             //multiple delete
-            $("#multipleDelete").on('click',function() { // bulk checked
+            $("#multipleDelete").on('click',function() {
                 var status = this.checked;
                 $(".deleteRow").each( function() {
                     $(this).prop("checked",status);
                 });
             });
 
-            $('#multipleDeleteButton').on("click", function(event){ // triggering delete one by one
-
+            $('#multipleDeleteButton').on("click", function(event){
                 swal({
                     title: "Are you sure?",
                     text: 'Once deleted, You would not be able to recover these roles',
@@ -133,35 +130,32 @@
                     dangerMode: true,
                 })
                     .then((willDelete) => {
-                    if (willDelete) {
-
-                        if( $('.deleteRow:checked').length > 0 ){  // at-least one checkbox checked
-                            var ids = [];
-                            $('.deleteRow').each(function(){
-                                if($(this).is(':checked')) {
-                                    ids.push($(this).val());
-                                }
+                        if (willDelete) {
+                            if( $('.deleteRow:checked').length > 0 ){
+                                var ids = [];
+                                $('.deleteRow').each(function(){
+                                    if($(this).is(':checked')) {
+                                        ids.push($(this).val());
+                                    }
+                                });
+                                var ids_string = ids.toString();
+                                $.ajax({
+                                    type: "POST",
+                                    url: "{{url('console/deleteMultipleRole')}}",
+                                    data: {data_ids:ids_string},
+                                    success: function(result) {
+                                        table.draw();
+                                    },
+                                    async:false
+                                });
+                            }
+                            swal("Role deleted!", {
+                                icon: "success",
                             });
-                            var ids_string = ids.toString();  // array to string conversion
-                            $.ajax({
-                                type: "POST",
-                                url: "{{url('console/deleteMultipleRole')}}",
-                                data: {data_ids:ids_string},
-                                success: function(result) {
-                                    table.draw(); // redrawing datatable
-                                },
-                                async:false
-                            });
+                        } else {
+                            swal("Role delete cancel!");
                         }
-
-                        swal("Role deleted!", {
-                            icon: "success",
-                        });
-                        //window.location.href = href;
-                    } else {
-                        swal("Role delete cancel!");
-            }
-            })
+                    })
             });
 
         });

@@ -14,6 +14,7 @@ trait UpdateUser
             $user = null;
             try {
                 $roles = $this->role->getAll();
+                $updateId = Crypt::decrypt($id);
                 $user = $this->user->findById(Crypt::decrypt($id));
                 return view("usermodule::admin.users.edit", compact(["user","roles"]));
             } catch (Exception $e) {
@@ -30,10 +31,12 @@ trait UpdateUser
         if ($user->can('update', $user)) {
             try {
                     $id = $request->id;
-
                     $updateUserData['name'] = $request->name;
                     $updateUserData['address'] = $request->address;
                     $updateUserData['status'] = $request->status;
+                    if (! empty($request->password)) {
+                        $updateUserData['password'] = bcrypt($request->password);
+                    }
                     $roleId = $request->role_id;
                     $updateAttributes = [
                         'role_id' => $roleId,

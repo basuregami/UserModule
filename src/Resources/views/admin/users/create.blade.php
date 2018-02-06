@@ -3,22 +3,8 @@
     <div class="border-bottom white-bg dashboard-header">
         <div class="row">
             <div class="col-lg-12">
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
-                @if (session('status'))
-                    <div class="alert alert-success">
-                        {{ session('status') }}
-                    </div>
-                @endif
-
+                @include('usermodule::includes.error')
+                @include('usermodule::includes.success')
                 <form class="form-horizontal ng-pristine ng-valid" method="POST" action="{{ route('users.store')}}">
                     {{ csrf_field() }}
                     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
@@ -59,6 +45,18 @@
                                 <span class="help-block">
                                         <strong>{{ $errors->first('username') }}</strong>
                                     </span>
+                            @endif
+                        </div>
+                    </div>
+
+                     <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
+                        <label for="address" class="col-md-4 control-label">Address</label>
+                        <div class="col-md-6">
+                            <input id="address" type="text" class="form-control" name="address" value="{{ old('address') }}"  autofocus>
+                            @if ($errors->has('name'))
+                                <span class="help-block">
+                                <strong>{{ $errors->first('address') }}</strong>
+                            </span>
                             @endif
                         </div>
                     </div>

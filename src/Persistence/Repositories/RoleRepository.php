@@ -11,6 +11,7 @@ namespace basuregami\UserModule\Persistence\Repositories;
 use basuregami\UserModule\Persistence\Repositories\Contract\iRoleInterface;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
+use basuregami\UserModule\Entities\Role\Role;
 
 class RoleRepository extends EloquentRepository implements iRoleInterface
 {
@@ -64,12 +65,38 @@ class RoleRepository extends EloquentRepository implements iRoleInterface
                 $nestedData['name'] = $role->name;
                 $nestedData['display_name'] = $role->display_name;
                 $nestedData['description'] = $role->description;
-                $nestedData['action'] = '
-                        <a href="'.url("/console/role/edit/").'/'.Crypt::encrypt($role->id).'" title="Edit" class="roleUpdate"><i class="fa fa-pencil-square-o fa-fw edit-icons edit"></i> </a>
 
-						<a href="'.url("/console/role/delete").'/'.Crypt::encrypt($role->id).'" title="Delete" class="roleRemove" role_name="'.$role->name.'"  roleId="'.Crypt::encrypt($role->id).'" "><i class="fa fa-trash edit-icons del"></i> </a>
-                ';
+                $authorizedUser = \Auth::user();
+                $roleModel = new Role();
+                if ($authorizedUser->can('delete', $roleModel) && $authorizedUser->can('edit', $roleModel) )
+                {
+                    $nestedData['action'] = '
+                          
+                          <a href="'.url("/console/role/edit/").'/'.Crypt::encrypt($role->id).'" title="Edit" class="roleUpdate"><i class="fa fa-pencil-square-o fa-fw edit-icons edit"></i> </a>
 
+                          <a href="'.url("/console/role/delete").'/'.Crypt::encrypt($role->id).'" title="Delete" class="roleRemove" role_name="'.$role->name.'"  roleId="'.Crypt::encrypt($role->id).'" "><i class="fa fa-trash edit-icons del"></i> </a>
+                         
+                    ';
+
+                }elseif ( $authorizedUser->can('edit', $roleModel) ) {
+                     $nestedData['action'] = '
+
+                          <a href="'.url("/console/role/edit/").'/'.Crypt::encrypt($role->id).'" title="Edit" class="roleUpdate"><i class="fa fa-pencil-square-o fa-fw edit-icons edit"></i> </a>
+
+                    ';
+
+                }elseif ( $authorizedUser->can('delete', $roleModel) ) {
+
+                     $nestedData['action'] = '
+                      
+                          <a href="'.url("/console/role/delete").'/'.Crypt::encrypt($role->id).'" title="Delete" class="roleRemove" role_name="'.$role->name.'"  roleId="'.Crypt::encrypt($role->id).'" "><i class="fa fa-trash edit-icons del"></i> </a>
+                    ';
+
+                }else{
+
+                    $nestedData['action'] = ' ';
+
+                }
                 ++$i;
 
                 $data[] = $nestedData;

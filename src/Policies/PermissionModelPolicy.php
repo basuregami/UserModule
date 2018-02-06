@@ -46,6 +46,7 @@ class PermissionModelPolicy
         if ($operationPermission[0] == 'on') {
             return true;
         }
+        return false;
     }
 
 
@@ -63,6 +64,7 @@ class PermissionModelPolicy
         if ($operationPermission[1] == 'on') {
             return true;
         }
+        return false;
     }
 
 
@@ -80,6 +82,7 @@ class PermissionModelPolicy
         if ($operationPermission[2] == 'on') {
             return true;
         }
+        return false;
     }
 
     /**
@@ -96,5 +99,6 @@ class PermissionModelPolicy
         if ($operationPermission[3] == 'on') {
             return true;
         }
+        return false;
     }
 }

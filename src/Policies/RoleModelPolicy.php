@@ -47,6 +47,7 @@ class RoleModelPolicy
         if ($operationPermission[0] == 'on') {
             return true;
         }
+        return false;
     }
 
 
@@ -64,6 +65,7 @@ class RoleModelPolicy
         if ($operationPermission[1] == 'on') {
             return true;
         }
+        return false;
     }
 
 
@@ -81,6 +83,7 @@ class RoleModelPolicy
         if ($operationPermission[2] == 'on') {
             return true;
         }
+        return false;
     }
 
     /**
@@ -97,5 +100,6 @@ class RoleModelPolicy
         if ($operationPermission[3] == 'on') {
             return true;
         }
+        return false;
     }
 }

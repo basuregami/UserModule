@@ -32,6 +32,7 @@ class StoreUserRequest extends Request
 
         return [
             'name'     => 'required|max:255',
+            'address' => 'max:150',
             'email'    => ['required', 'email', 'max:255', Rule::unique('users')],
             'username' => ['required', 'max:20', Rule::unique('users')],
             'password' => 'required|min:2|confirmed',
@@ -44,6 +45,7 @@ class StoreUserRequest extends Request
       
         $input = $this->all();
         $input['name'] = filter_var($input['name'], FILTER_SANITIZE_STRING);
+        $input['address'] = filter_var($input['address'], FILTER_SANITIZE_STRING);
         $input['username'] = filter_var($input['username'], FILTER_SANITIZE_STRING);
         $input['email'] = filter_var($input['email'], FILTER_SANITIZE_EMAIL);
         $input['role_id'] =  Crypt::decrypt($input['role_id']);

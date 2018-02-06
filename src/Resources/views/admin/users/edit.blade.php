@@ -3,22 +3,8 @@
         <div class="border-bottom white-bg dashboard-header">
             <div class="row">
                 <div class="col-lg-12">
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
+                    @include('usermodule::includes.error')
+                    @include('usermodule::includes.success')
                     <form class="form-horizontal ng-pristine ng-valid" method="POST" action="{{ route('users.update')}}">
                         {{ csrf_field() }}
 
@@ -100,16 +86,68 @@
                                 </div>
                             </div>
 
+                               <div id="contactField"
+                            <?php 
+                                if ( $errors->has('password') || $errors->has('password-confirm')  )
+                                {
+                                    echo ' ';
+                                }
+                                else {
+                                    echo ' style="display:none;" ';
+                                }  
+                            ?> 
+                        >
+
+                            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                                <label for="password" class="col-md-4 control-label">Password</label>
+
+                                <div class="col-md-6">
+                                    <input id="password" type="password" class="form-control" name="password">
+
+                                    @if ($errors->has('password'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+
                             <div class="form-group">
+                                <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
+
+                                <div class="col-md-6">
+                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" >
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3 col-md-offset-5">
+                                    <a id="contactBtn" style="margin-right: 15px;" class="btn btn-success">Update Password</a>
+                                </div>
                                 <div class="col-md-6 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary">
                                         Update
                                     </button>
                                 </div>
                             </div>
+
                         </form>
 
                 </div>
             </div>
         </div>
+    @endsection
+    @section('after-scripts')
+        <script type="text/javascript">
+            $(document).ready(function () {
+
+                $('#contactBtn').on('click', function (e) {
+                    e.preventDefault();
+                    $("#contactField").slideToggle();
+                });
+            })
+        </script>
     @endsection

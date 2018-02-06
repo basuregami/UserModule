@@ -47,8 +47,7 @@ class UserRepository extends EloquentRepository implements iUserInterface
                 ->get();
         } else {
             $search = $request->input('search.value');
-            $users =  $this->modelClassName::where('is_superadmin',0)
-                ->orwhere('id', 'LIKE', "%{$search}%")
+            $users =  $this->modelClassName::where('id', 'LIKE', "%{$search}%")
                 ->orWhere('name', 'LIKE', "%{$search}%")
                 ->offset($start)
                 ->limit($limit)
@@ -74,11 +73,35 @@ class UserRepository extends EloquentRepository implements iUserInterface
                 }else{
                     $nestedData['status'] = '<label class="label label-warning"> InActive </label>';
                 }
-                $nestedData['action'] = '
+                
+                $authorizedUser = \Auth::user();
+                if ($authorizedUser->can('delete', $authorizedUser) && $authorizedUser->can('update', $authorizedUser) ){
+
+                    $nestedData['action'] = '
+                        
                         <a href="/console/user/edit/'.Crypt::encrypt($user->id).'" title="Edit" class="userUpdate" btn-value="'.$user->id.'"><i class="fa fa-pencil-square-o fa-fw edit-icons edit"></i> </a>
 
 						<a href="'.url("/console/user/delete").'/'.$user->id.'" title="Delete" class="userRemove" userName="'.$user->name.'"  userId="'.$user->id.'" "><i class="fa fa-trash edit-icons del"></i> </a>
-                ';
+                    ';
+
+                }elseif( $authorizedUser->can('update', $authorizedUser) ){
+
+                    $nestedData['action'] = '
+
+                        <a href="/console/user/edit/'.Crypt::encrypt($user->id).'" title="Edit" class="userUpdate" btn-value="'.$user->id.'"><i class="fa fa-pencil-square-o fa-fw edit-icons edit"></i> </a>
+                    ';
+
+                }elseif( $authorizedUser->can('delete', $authorizedUser)) {
+                    $nestedData['action'] = '
+
+                       <a href="'.url("/console/user/delete").'/'.$user->id.'" title="Delete" class="userRemove" userName="'.$user->name.'"  userId="'.$user->id.'" "><i class="fa fa-trash edit-icons del"></i> </a>
+                    ';
+
+                }else{
+
+                    $nestedData['action'] = ' ';
+
+                }
 
                 ++$i;
 

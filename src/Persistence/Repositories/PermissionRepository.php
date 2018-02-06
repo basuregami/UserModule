@@ -11,6 +11,7 @@ namespace basuregami\UserModule\Persistence\Repositories;
 use basuregami\UserModule\Persistence\Repositories\Contract\iPermissionInterface;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
+use basuregami\UserModule\Entities\Permission\Permission;
 
 class PermissionRepository extends EloquentRepository implements iPermissionInterface
 {
@@ -63,11 +64,34 @@ class PermissionRepository extends EloquentRepository implements iPermissionInte
                 $nestedData['name'] = $permission->name;
                 $nestedData['display_name'] = $permission->display_name;
                 $nestedData['description'] = $permission->description;
-                $nestedData['action'] = '
-                        <a href="'.url("/console/permission/edit/").'/'.Crypt::encrypt($permission->id).'" title="Edit" class="permissionUpdate"><i class="fa fa-pencil-square-o fa-fw edit-icons edit"></i> </a>
+                $authorizedUser = \Auth::user();
+                $PermissionModel = new Permission();
+                if ($authorizedUser->can('delete', $PermissionModel) && $authorizedUser->can('edit', $PermissionModel) )
+                {
+                    $nestedData['action'] = '
+                            <a href="'.url("/console/permission/edit/").'/'.Crypt::encrypt($permission->id).'" title="Edit" class="permissionUpdate"><i class="fa fa-pencil-square-o fa-fw edit-icons edit"></i> </a>
 
-						<a href="'.url("/console/permission/delete").'/'.Crypt::encrypt($permission->id).'" title="Delete" class="permissionRemove" permission_name="'.$permission->name.'"  permissionId="'.Crypt::encrypt($permission->id).'" "><i class="fa fa-trash edit-icons del"></i> </a>
-                ';
+    						<a href="'.url("/console/permission/delete").'/'.Crypt::encrypt($permission->id).'" title="Delete" class="permissionRemove" permission_name="'.$permission->name.'"  permissionId="'.Crypt::encrypt($permission->id).'" "><i class="fa fa-trash edit-icons del"></i> </a>
+                    ';
+
+               }elseif ( $authorizedUser->can('edit', $PermissionModel) ) {
+
+                      $nestedData['action'] = '
+                            <a href="'.url("/console/permission/edit/").'/'.Crypt::encrypt($permission->id).'" title="Edit" class="permissionUpdate"><i class="fa fa-pencil-square-o fa-fw edit-icons edit"></i> </a>
+                    ';
+               
+               }elseif ( $authorizedUser->can('delete', $PermissionModel) ) {
+
+                     $nestedData['action'] = '
+
+                            <a href="'.url("/console/permission/delete").'/'.Crypt::encrypt($permission->id).'" title="Delete" class="permissionRemove" permission_name="'.$permission->name.'"  permissionId="'.Crypt::encrypt($permission->id).'" "><i class="fa fa-trash edit-icons del"></i> </a>
+                    ';
+
+
+               }else{
+
+                    $nestedData['action'] = '';
+               }
 
                 ++$i;
 

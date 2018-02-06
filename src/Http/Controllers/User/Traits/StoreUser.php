@@ -26,15 +26,17 @@ trait StoreUser
         if ($user->can('create', $user)) {
             try {
                 $userStore['name'] = $request->name;
+                $userStore['address'] = $request->address;
                 $userStore['email'] = $request->email;
                 $userStore['username'] = $request->username;
                 $userStore['password'] = bcrypt($request->password);
                 //dd($userStore);
+                //dd($request->all());
                 $role_id = $request->role_id;
 
                 //create the new user
                 $userCreated = $this->user->create($userStore);
-
+                
                 $userCreated->roles()->attach($role_id);
                 
                 //Create new userCreate Event

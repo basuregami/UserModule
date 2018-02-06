@@ -28,12 +28,18 @@ class UpdateUserRequest extends Request
     public function rules()
     {
         $this->sanitize();
-       // $input = $this->all());
+        if ( ! empty($this->password) ) {
+            return [
+                'name'     => 'required|max:255',
+                'status' => 'required',
+                'address' => 'required',
+                'password' => 'sometimes|min:2|confirmed',
+            ];
+        }
         return [
             'name'     => 'required|max:255',
             'status' => 'required',
-            'address' => 'required'
-            //'email' => 'unique:users,email,'.$this->input['id']
+            'address' => 'required',
         ];
     }
 
@@ -42,7 +48,8 @@ class UpdateUserRequest extends Request
         $input = $this->all();
         $input['name'] = filter_var($input['name'], FILTER_SANITIZE_STRING);
         $input['address'] = filter_var($input['address'], FILTER_SANITIZE_STRING);
-        //$input['email'] = filter_var($input['email'], FILTER_SANITIZE_EMAIL);
+        
+
         $this->replace($input);
     }
 

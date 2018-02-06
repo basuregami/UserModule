@@ -39,6 +39,8 @@ class UserModelPolicy
         if ($operationPermission[0] == 'on') {
             return true;
         }
+        return false;
+
     }
      
  
@@ -56,6 +58,8 @@ class UserModelPolicy
         if ($operationPermission[1] == 'on') {
             return true;
         }
+        return false;
+
     }
      
     
@@ -73,6 +77,8 @@ class UserModelPolicy
         if ($operationPermission[2] == 'on') {
             return true;
         }
+        return false;
+
     }
      
     /**
@@ -84,10 +90,12 @@ class UserModelPolicy
     */
     public function delete(User $user)
     {
+
         $operationPermission = $this->operation($user);
 
         if ($operationPermission[3] == 'on') {
             return true;
         }
+        return false;
     }
 }
