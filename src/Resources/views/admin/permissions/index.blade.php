@@ -3,7 +3,9 @@
     <div class="table-responsive">
          @include('usermodule::includes.success')
         <table class="table table-striped table-bordered table-condensed display" id="permissionTable" width="100%" cellspacing="0">
-            <input id="multipleDelete" type="checkbox"><button id="multipleDeleteButton">Delete</button>
+            @can('delete', Auth::user(), basuregami\UserModule\Entities\Permission\Permission::class)
+                <input id="multipleDelete" type="checkbox"><button id="multipleDeleteButton">Delete</button>
+            @endcan
             <thead class="">
                 <tr>
                     <th>S.No.</th>

@@ -4,7 +4,9 @@
         
         <table class="table table-striped table-bordered table-condensed display" id="roleTable" width="100%" cellspacing="0">
             @include('usermodule::includes.success')
-            <input id="multipleDelete" type="checkbox"><button id="multipleDeleteButton">Delete</button>
+             @can('delete', Auth::user(), basuregami\UserModule\Entities\Role\Role::class)
+                <input id="multipleDelete" type="checkbox"><button id="multipleDeleteButton">Delete</button>
+            @endcan
             <thead class="">
             <tr>
                 <th>S.No.</th>

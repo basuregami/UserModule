@@ -8,7 +8,10 @@
     <div class="table-responsive">
          @include('usermodule::includes.success')
         <table class="table table-striped table-bordered table-condensed display" id="userTable" width="100%" cellspacing="0">
-            <input id="multipleDelete" type="checkbox"><button id="multipleDeleteButton">Delete</button>
+            @if (! Auth::user()->can('delete'))
+                <input id="multipleDelete" type="checkbox"><button id="multipleDeleteButton">Delete 
+                </button>
+            @endif
             <thead class="">
                 <tr>
                     <th>S.No.</th>
