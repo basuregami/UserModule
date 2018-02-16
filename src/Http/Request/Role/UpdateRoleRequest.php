@@ -30,7 +30,7 @@ class UpdateRoleRequest extends Request
         $this->sanitize();
         // $input = $this->all());
         return [
-           'display_name'     => 'required|max:255',
+            'display_name'     => ['required', 'max:30', Rule::unique('roles')],
             'description'    => 'max:255',
         ];
     }

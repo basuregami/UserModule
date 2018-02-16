@@ -30,7 +30,7 @@ class StorePermissionRequest extends Request
         $this->sanitize();
 
         return [
-            'display_name'     => 'required|max:255',
+            'display_name'     => ['required', 'max:30', Rule::unique('permissions')],
             'description'    => 'max:255',
         
         ];
