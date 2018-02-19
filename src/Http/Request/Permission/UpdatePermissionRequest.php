@@ -30,7 +30,7 @@ class UpdatePermissionRequest extends Request
         $this->sanitize();
 
         return [
-            'display_name'     => ['required', 'max:30', Rule::unique('permissions')],
+            'display_name'     => 'required|max:255|unique:permissions,display_name,'.$this->id,
             'description'    => 'max:255',
         
         ];
